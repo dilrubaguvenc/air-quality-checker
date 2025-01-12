@@ -1,5 +1,6 @@
 import React from "react"; 
 
+
 const getCardColor = (aqi) => {
     if (aqi <=50) {
         return 'bg-success text-white'
