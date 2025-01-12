@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import './App.css';
-
+import CitySearch from './CitySearch';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import AirQualityCard from './AirQualityCard'
 
 function App() {
   const [airQualityData, setAirQualityData] = useState(null)
@@ -17,17 +19,33 @@ function App() {
           setError(null)
         } else {
           setError("Sorry, we couldn't find the city you were looking for. Try another location nearby or ensure your spelling is correct.")
+          setAirQualityData(null)
         }
       } catch (error) {
         console.error("network error:", error)
         // set error state
-
+        setError('Sorry, something went wrong')
+        setAirQualityData(null)
         // set air quality data to null 
 
       }
     }
       return (
-        <h1>Hello World</h1>
+        <div className='container'>
+        <h1 className='mt-5 mb-3'>Air Quality Index Checker</h1>
+        <CitySearch getAirQuality={getAirQuality}/>
+        {error && (
+          <div className='alert alert-danger' role='alert'>
+            {error}
+          </div>
+        )}
+        {airQualityData && (
+          // Pollutant Info
+          <>
+           <AirQualityCard data={airQualityData}/>
+          </>
+        )} 
+        </div>
       );
     } 
 
